@@ -1,0 +1,76 @@
+$sidebar-width: 280px;
+
+
+//行動版 (預設)
+.sidebar{
+    width: $sidebar-width;
+    margin-left: -$sidebar-width;
+    transition: margin-left 0.25s;
+    position: fixed;
+    top: 0;
+
+    //滑鼠移過去會有淡淡的背景色，而目前被點選的項目（Active）左側會出現一條藍色的提示邊條
+    .sidebar-link{
+        color: $dark;
+        display: block;
+        text-decoration: none;
+        padding: 0.875rem 0;
+        &:hover {
+            background-color: rgba($primary, 0.16);
+        }
+    }
+    .sidebar-link.active{
+        position: relative;
+        color: $primary !important;
+        background-color: rgba($primary, 0.16);
+        &::before{
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 3px;
+            background: $primary;
+        }
+    }
+}
+.main{
+    width: 100%;
+}
+
+//行動版展開
+.sidebar-toggled{
+    .sidebar{
+        margin-left: 0;
+        position: fixed;
+        z-index: 1000;
+    }
+    // .main{
+    //     margin-left: $sidebar-width;
+    // }
+}
+
+//桌面版 (up)
+@include media-breakpoint-up(lg) {
+.sidebar{
+    width: $sidebar-width;
+    margin-left: 0;
+}
+.main{
+    width: calc(100vw - #{$sidebar-width});
+    margin-left: $sidebar-width;
+    transition: margin-left 0.25s;
+} //變數被視為字串時，要加上 #{變數}，才能正確帶入
+
+//桌面版展開
+.sidebar-toggled{
+    .sidebar{
+        margin-left: -$sidebar-width;
+    }
+    .main{
+        width: 100%;
+        margin-left: 0; //可加可不加，因為前面已經有 width:100%; 的設定確定滿版
+    }
+}
+
+}
